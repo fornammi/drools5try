@@ -1,0 +1,13 @@
+package com.drools.demo.point
+import org.nammi.drools5try.PointDomain
+
+rule "subBackNumsPoint"
+	// 发生退货，扣减10分
+	salience 10
+	lock-on-active true
+	when
+		$pointDomain:PointDomain(backNums>=1)
+	then
+		$pointDomain.setPoint($pointDomain.getPoint()-10);
+		$pointDomain.recordPointLog($pointDomain.getUserName(), "subBackNumsPoint");
+end

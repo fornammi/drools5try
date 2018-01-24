@@ -1,0 +1,16 @@
+package com.drools.demo.point
+import org.nammi.drools5try.PointDomain
+
+rule "birthdayPoint"
+	// 过生日，则加10分，并且将当月交易比数翻倍后再计算积分
+	salience 100
+	lock-on-active true
+	when
+		$pointDomain:PointDomain(birthDay==true)
+	then
+		$pointDomain.setPoint($pointDomain.getPoint()+10);
+		$pointDomain.setBuyNums($pointDomain.getBuyNums()*2);
+		$pointDomain.setBuyMoney($pointDomain.getBuyMoney()*2);
+		$pointDomain.setBillThisMonth($pointDomain.getBillThisMonth()*2);
+		$pointDomain.recordPointLog($pointDomain.getUserName(), "birthdayPoint");
+end
